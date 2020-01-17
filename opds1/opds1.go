@@ -66,7 +66,7 @@ type Entry struct {
 
 // Content content tag in an entry, the type will be html or text
 type Content struct {
-	Content     string `xml:",cdata"`
+	Content     string `xml:",innerxml"`
 	ContentType string `xml:"type,attr"`
 }
 
