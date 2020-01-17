@@ -9,6 +9,13 @@ import (
 	"time"
 )
 
+type feedType int
+
+const (
+	navigation  feedType = 1
+	acquisition feedType = 2
+)
+
 // Feed root element for acquisition or navigation feed
 type Feed struct {
 	ID           string    `xml:"id"`
