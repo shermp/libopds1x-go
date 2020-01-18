@@ -9,22 +9,17 @@ import (
 	"time"
 )
 
-type feedType int
-
-const (
-	navigation  feedType = 1
-	acquisition feedType = 2
-)
-
 // Feed root element for acquisition or navigation feed
 type Feed struct {
-	ID           string    `xml:"id"`
-	Title        string    `xml:"title"`
-	Updated      time.Time `xml:"updated"`
-	Entries      []Entry   `xml:"entry"`
-	Links        []Link    `xml:"link"`
-	TotalResults int       `xml:"totalResults"`
-	ItemsPerPage int       `xml:"itemsPerPage"`
+	ID               string    `xml:"id"`
+	Title            string    `xml:"title"`
+	Updated          time.Time `xml:"updated"`
+	Entries          []Entry   `xml:"entry"`
+	Links            []Link    `xml:"link"`
+	TotalResults     int       `xml:"totalResults"`
+	ItemsPerPage     int       `xml:"itemsPerPage"`
+	feedTypeDetected bool
+	isNavigation     bool
 }
 
 // Link link to different resources
