@@ -57,6 +57,7 @@ type Entry struct {
 	Summary    Content    `xml:"summary"`
 	Content    Content    `xml:"content"`
 	Series     []Serie    `xml:"Series"`
+	AppMeta    map[string]string
 }
 
 // Content content tag in an entry, the type will be html or text
