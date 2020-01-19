@@ -5,7 +5,7 @@ import (
 )
 
 func (f *Feed) detectFeedType() {
-	if f.feedTypeDetected {
+	if !f.feedTypeDetected {
 		f.isNavigation = true
 	for _, entry := range f.Entries {
 		for _, link := range entry.Links {
