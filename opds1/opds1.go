@@ -96,8 +96,6 @@ type Serie struct {
 
 // ParseURL take a url in entry and parse the feed
 func ParseURL(url string) (*Feed, error) {
-	var feed Feed
-
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
@@ -107,12 +105,17 @@ func ParseURL(url string) (*Feed, error) {
 		return nil, errReq
 	}
 
-	buff, errRead := ioutil.ReadAll(res.Body)
+	return ParseResponse(res)
+}
+
+// ParseResponse is useful if you need more control over the
+// HTTP communications
+func ParseResponse(r *http.Response) (*Feed, error) {
+	var feed Feed
+	buff, errRead := ioutil.ReadAll(r.Body)
 	if errRead != nil {
 		return nil, errRead
 	}
-
 	xml.Unmarshal(buff, &feed)
-
 	return &feed, nil
 }
