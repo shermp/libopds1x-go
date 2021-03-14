@@ -10,6 +10,13 @@ import (
 	"time"
 )
 
+type imageRel string
+
+const (
+	stdImage   imageRel = "http://opds-spec.org/image"
+	thumbImage imageRel = "http://opds-spec.org/image/thumbnail"
+)
+
 // Feed root element for acquisition or navigation feed
 type Feed struct {
 	ID               string    `xml:"id"`
@@ -145,4 +152,28 @@ func (f *Feed) IsNavigation() bool {
 func (f *Feed) IsAcquisition() bool {
 	f.detectFeedType()
 	return !f.isNavigation
+}
+
+func (f *Feed) imageLink(rel imageRel) *Link {
+	if !f.IsAcquisition() {
+		return nil
+	}
+	for _, link := range f.Links {
+		if link.Rel == string(rel) {
+			return &link
+		}
+	}
+	return nil
+}
+
+// ThumbnailLink gets the link for a thumbnail from an aquisition feed.
+// nil will be returned if not an aquisition feed, or a thumbnail could not be found
+func (f *Feed) ThumbnailLink() *Link {
+	return f.imageLink(thumbImage)
+}
+
+// ImageLink gets the link for an image from an aquisition feed.
+// nil will be returned if not an aquisition feed, or an image could not be found
+func (f *Feed) ImageLink() *Link {
+	return f.imageLink(stdImage)
 }
