@@ -223,3 +223,10 @@ func (f *Feed) PrevPath() string {
 func (f *Feed) NextPath() string {
 	return f.GetNavPath("next")
 }
+
+func (f *Feed) EntryCount() int {
+	if f.Entries != nil {
+		return len(f.Entries)
+	}
+	return 0
+}
