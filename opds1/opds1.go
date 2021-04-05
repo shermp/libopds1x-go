@@ -177,3 +177,49 @@ func (f *Feed) ThumbnailLink() *Link {
 func (f *Feed) ImageLink() *Link {
 	return f.imageLink(stdImage)
 }
+
+func (f *Feed) GetNavPath(rel string) string {
+	var path string
+	for _, link := range f.Links {
+		if link.Rel == rel {
+			path = link.Href
+		}
+	}
+	return path
+}
+
+// A 'SHOULD' recommendation from the OPDS 1.0 spec
+
+// StartPath gets the link to the root OPDS catalog
+func (f *Feed) StartPath() string {
+	return f.GetNavPath("start")
+}
+
+// Doesn't seem part of the spec, but used in an example, and Calibre uses it
+
+// UpPath gets the the parent feed
+func (f *Feed) UpPath() string {
+	return f.GetNavPath("up")
+}
+
+// The following nav paths are from https://tools.ietf.org/html/rfc5005
+
+// FirstPath gets the first page
+func (f *Feed) FirstPath() string {
+	return f.GetNavPath("first")
+}
+
+// LastPath gets the last page
+func (f *Feed) LastPath() string {
+	return f.GetNavPath("last")
+}
+
+// PrevPath gets the previous page, relative to the current feed
+func (f *Feed) PrevPath() string {
+	return f.GetNavPath("previous")
+}
+
+// NextPath gets the next page, relative to the current feed
+func (f *Feed) NextPath() string {
+	return f.GetNavPath("next")
+}
