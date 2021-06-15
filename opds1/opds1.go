@@ -17,6 +17,13 @@ const (
 	thumbImage imageRel = "http://opds-spec.org/image/thumbnail"
 )
 
+var formats = map[string]string{
+	"epub":  "application/epub+zip",
+	"kepub": "application/x-kobo-epub+zip",
+	"mobi":  "application/x-mobipocket-ebook",
+	"pdf":   "application/pdf",
+}
+
 // Feed root element for acquisition or navigation feed
 type Feed struct {
 	ID               string    `xml:"id"`
@@ -229,4 +236,17 @@ func (f *Feed) EntryCount() int {
 		return len(f.Entries)
 	}
 	return 0
+}
+
+// FormatLink returns the link for the specified format if it exists.
+// Nil is returned if no links were found, or the format is unsupported.
+func (e *Entry) FormatLink(format string) *Link {
+	if f, ok := formats[format]; !ok {
+		for _, l := range e.Links {
+			if l.TypeLink == f {
+				return &l
+			}
+		}
+	}
+	return nil
 }
