@@ -241,7 +241,7 @@ func (f *Feed) EntryCount() int {
 // FormatLink returns the link for the specified format if it exists.
 // Nil is returned if no links were found, or the format is unsupported.
 func (e *Entry) FormatLink(format string) *Link {
-	if f, ok := formats[format]; !ok {
+	if f, ok := formats[format]; ok {
 		for _, l := range e.Links {
 			if l.TypeLink == f {
 				return &l
